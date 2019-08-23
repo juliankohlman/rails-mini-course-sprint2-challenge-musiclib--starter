@@ -1,7 +1,7 @@
 module Api
 	module V1
 		class AlbumsController < ApplicationController
-			
+			#refactor and test with postman
 
 			def index
 				@albums = Album.includes(:songs)
