@@ -4,9 +4,8 @@ module Api
 	module V1
 		class PlaylistsController < ApplicationController
 			def index
-				
 				if params[:user_id].present?
-          @playlist = Playlist.all 
+					@playlist = Playlist.all
 				else
 					render json: @playlist.errors, status: 403
 				end
