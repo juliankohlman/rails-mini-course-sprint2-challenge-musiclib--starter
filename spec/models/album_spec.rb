@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Album, type: :model do
-	# artist = Artist.new(name: 'Nipsey Hussle')
+	artist = Artist.new(name: 'Nipsey Hussle')
 
 	# let(:artist) { Artist.create! }
 
@@ -9,7 +9,7 @@ RSpec.describe Album, type: :model do
 		it 'is valid' do
 			# instantiate a valid album and ensure it is valid
 			# album = Album.new(name: 'Victory Lap', artist_id: artist.id)
-			album = Album.new(name: 'Victory Lap', artist_id: 1)
+			album = Album.new(name: 'Victory Lap', artist_id: artist.id)
 			result = album.valid?
 			errors = album.errors.full_messages
 
