@@ -1,15 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Album, type: :model do
-	artist = Artist.new(name: 'Nipsey Hussle')
-
-	# let(:artist) { Artist.create! }
-
+	let(:artist) { Artist.create!(name: 'Rick Sanchez') }
+	let(:album) { Album.create!(name: 'Get Schwifty', artist_id: artist.id) }
 	describe 'validations' do
 		it 'is valid' do
 			# instantiate a valid album and ensure it is valid
+			# artist = Artist.new(name: 'Nipsey Hussle')
 			# album = Album.new(name: 'Victory Lap', artist_id: artist.id)
-			album = Album.new(name: 'Victory Lap', artist_id: artist.id)
 			result = album.valid?
 			errors = album.errors.full_messages
 
