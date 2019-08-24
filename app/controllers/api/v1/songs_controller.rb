@@ -10,8 +10,7 @@ module Api
 					@songs = Song.all
 				end
 
-				@sorted_songs = SongSorter.new(@songs, params[:sort])
-				@sorted_songs.sort
+				@sorted_songs = SongSorter.new(@songs, params[:sort]).sort
 
 				render json: @sorted_songs
 			end

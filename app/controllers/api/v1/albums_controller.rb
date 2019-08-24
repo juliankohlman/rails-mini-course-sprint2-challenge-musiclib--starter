@@ -8,7 +8,7 @@ module Api
 					if params[:artist_id].present?
 						Artist.find(params[:artist_id]).albums.available_ordered
 					else
-						@albums = albums.available_ordered
+						@albums = @albums.available_ordered
 					end
 				# if params[:artist_id].present?
 				# 	@albums = Artist.find(params[:artist_id]).albums.available_ordered
