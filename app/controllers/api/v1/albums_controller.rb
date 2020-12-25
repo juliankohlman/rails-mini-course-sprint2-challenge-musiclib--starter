@@ -1,34 +1,42 @@
 module Api
-  module V1
-    class AlbumsController < ApplicationController
-      def index
-        if params[:artist_id].present?
-          @albums = Artist.find(params[:artist_id]).albums.where(available: true).order(:name)
-        else
-          @albums = Album.where(available: true).order(:name).all
-        end
+	module V1
+		class AlbumsController < ApplicationController
+			def index
+				@albums = Album.includes(:songs)
 
-        render json: @albums.map { |album| format_album_json(album) }
-      end
+				@albums =
+					if params[:artist_id].present?
+						Artist.find(params[:artist_id]).albums.available_ordered
+					else
+						@albums = @albums.available_ordered
+					end
+				# if params[:artist_id].present?
+				# 	@albums = Artist.find(params[:artist_id]).albums.available_ordered
+				# else
+				# 	@albums = albums.available_ordered
+				# end
 
-      def show
-        @album = Album.find(params[:id])
+				render json: @albums.map { |album| format_album_json(album) }
+			end
 
-        render json: format_album_json(@album)
-      end
+			def show
+				@album = Album.find(params[:id])
 
-      private
+				render json: format_album_json(@album)
+			end
 
-      def format_album_json(album)
-        {
-          id: album.id,
-          name: album.name,
-          length_seconds: album.songs.reduce(0) { |length, song| length + song.length_seconds },
-          song_count: album.songs.count,
-          created_at: album.created_at,
-          updated_at: album.updated_at,
-        }
-      end
-    end
-  end
+			private
+
+			def format_album_json(album)
+				{
+					id: album.id,
+					name: album.name,
+					length_seconds: album.length_seconds,
+					song_count: album.songs.count,
+					created_at: album.created_at,
+					updated_at: album.updated_at
+				}
+			end
+		end
+	end
 end
